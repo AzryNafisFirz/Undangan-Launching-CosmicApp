@@ -9,16 +9,18 @@ const navbarMusicIcon = document.getElementById("navbarMusicIcon");
 const navbarMusicLabel = document.getElementById("navbarMusicLabel");
 const toast = document.getElementById("toast");
 
-const eventDate = new Date("2026-12-31T19:00:00");
+const SUPABASE_URL = "https://ryvqmhwsashrfqsvaicy.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_N_E5bYlOdEyR8ZOf0ouvrA_UMQd8DLi";
+
+const eventDate = new Date("2026-12-31T19:00:00+07:00");
 
 const params = new URLSearchParams(window.location.search);
 const requestedGuest = params.get("to");
 if (requestedGuest) {
   const guest = requestedGuest.trim();
-  guestName.textContent =
-    guest && !/^investor\s*lorem$/i.test(guest) && !/^lorem(?:\s|$)/i.test(guest)
-      ? guest
-      : "Investor / Peserta RSVP";
+  guestName.textContent = guest && !/^investor\s*lorem$/i.test(guest) && !/^lorem(?:\s|$)/i.test(guest)
+    ? guest
+    : "Investor / Peserta RSVP";
 }
 
 function setMusicButton(isPlaying) {
@@ -36,16 +38,12 @@ openButton.addEventListener("click", () => {
   invitationNav.classList.add("is-visible");
   invitationNav.setAttribute("aria-hidden", "false");
 
-  music.play()
-    .then(() => setMusicButton(true))
-    .catch(() => {
-      setMusicButton(false);
-      showToast("Musik gagal diputar. Coba tekan tombol musik lagi.");
-    });
+  music.play().then(() => setMusicButton(true)).catch(() => {
+    setMusicButton(false);
+    showToast("Musik gagal diputar. Coba tekan tombol musik lagi.");
+  });
 
-  window.setTimeout(() => {
-    cover.setAttribute("aria-hidden", "true");
-  }, 800);
+  window.setTimeout(() => cover.setAttribute("aria-hidden", "true"), 800);
 });
 
 navbarMusicToggle.addEventListener("click", async () => {
@@ -63,18 +61,11 @@ navbarMusicToggle.addEventListener("click", async () => {
 });
 
 function updateCountdown() {
-  const difference = eventDate.getTime() - Date.now();
-  const safeDifference = Math.max(0, difference);
-
-  const days = Math.floor(safeDifference / 86400000);
-  const hours = Math.floor((safeDifference % 86400000) / 3600000);
-  const minutes = Math.floor((safeDifference % 3600000) / 60000);
-  const seconds = Math.floor((safeDifference % 60000) / 1000);
-
-  document.getElementById("days").textContent = days;
-  document.getElementById("hours").textContent = hours;
-  document.getElementById("minutes").textContent = minutes;
-  document.getElementById("seconds").textContent = seconds;
+  const difference = Math.max(0, eventDate.getTime() - Date.now());
+  document.getElementById("days").textContent = Math.floor(difference / 86400000);
+  document.getElementById("hours").textContent = Math.floor((difference % 86400000) / 3600000);
+  document.getElementById("minutes").textContent = Math.floor((difference % 3600000) / 60000);
+  document.getElementById("seconds").textContent = Math.floor((difference % 60000) / 1000);
 }
 
 updateCountdown();
@@ -82,9 +73,7 @@ window.setInterval(updateCountdown, 1000);
 
 const invitationDescription =
   "Dengan hormat, Anda diundang menghadiri konferensi privat dan peresmian CosmicApp oleh Ornava Corporation. " +
-  "Acara membahas visi produk, roadmap, perkembangan pengembangan, serta diskusi bersama moderator dan investor. " +
-  "Moderator: Nafis Azzaky Erwansya, Owner & Founder, serta Naufal Abrar Erwansya, Co-Owner & Co-Founder. " +
-  "Akses acara melalui Google Meet atau Discord pada tautan RSVP.";
+  "Acara membahas visi produk, roadmap, perkembangan pengembangan, serta diskusi bersama moderator dan investor.";
 
 const calendarUrl = new URL("https://calendar.google.com/calendar/render");
 calendarUrl.searchParams.set("action", "TEMPLATE");
@@ -95,68 +84,16 @@ calendarUrl.searchParams.set("location", "AICE BSD Convention");
 document.getElementById("googleCalendar").href = calendarUrl.toString();
 
 document.getElementById("downloadIcs").addEventListener("click", () => {
-  const now = new Date();
-  const stamp = now.toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
-  const description = invitationDescription
-    .replace(/\\/g, "\\\\")
-    .replace(/\n/g, "\\n")
-    .replace(/,/g, "\\,")
-    .replace(/;/g, "\\;");
-
+  const now = new Date().toISOString().replace(/[-:]/g, "").replace(/\.\d{3}/, "");
   const lines = [
-    "BEGIN:VCALENDAR",
-    "VERSION:2.0",
-    "CALSCALE:GREGORIAN",
-    "METHOD:PUBLISH",
-    "PRODID:-//CosmicApp Launch - Ornava Corporation//ID",
-    "X-WR-CALNAME:CosmicApp Launch",
-    "X-WR-TIMEZONE:Asia/Jakarta",
-    "BEGIN:VTIMEZONE",
-    "TZID:Asia/Jakarta",
-    "X-LIC-LOCATION:Asia/Jakarta",
-    "BEGIN:STANDARD",
-    "TZOFFSETFROM:+0700",
-    "TZOFFSETTO:+0700",
-    "TZNAME:WIB",
-    "DTSTART:19700101T000000",
-    "END:STANDARD",
-    "END:VTIMEZONE",
-    "BEGIN:VEVENT",
-    "UID:cosmicapp-launch-20261231@ornava.com",
-    "DTSTAMP:" + stamp,
-    "DTSTART;TZID=Asia/Jakarta:20261231T190000",
-    "DTEND;TZID=Asia/Jakarta:20261231T210000",
-    "SUMMARY:CosmicApp Launch - Ornava Corporation",
-    "DESCRIPTION:" + description,
-    "LOCATION:AICE BSD Convention",
-    "URL:https://maps.google.com/?q=AICE+BSD+Convention",
-    "ORGANIZER;CN=Ornava Corporation:mailto:ornavateam@gmail.com",
-    "STATUS:CONFIRMED",
-    "TRANSP:OPAQUE",
-    "SEQUENCE:0",
-    "CLASS:PRIVATE",
-    "PRIORITY:5",
-    "END:VEVENT",
-    "END:VCALENDAR"
+    "BEGIN:VCALENDAR", "VERSION:2.0", "CALSCALE:GREGORIAN", "METHOD:PUBLISH",
+    "X-WR-CALNAME:CosmicApp Launch", "X-WR-TIMEZONE:Asia/Jakarta",
+    "BEGIN:VEVENT", "UID:cosmicapp-launch-20261231@ornava.com", "DTSTAMP:" + now,
+    "DTSTART;TZID=Asia/Jakarta:20261231T190000", "DTEND;TZID=Asia/Jakarta:20261231T210000",
+    "SUMMARY:CosmicApp Launch - Ornava Corporation", "LOCATION:AICE BSD Convention",
+    "DESCRIPTION:" + invitationDescription, "END:VEVENT", "END:VCALENDAR"
   ];
-
-  const ics = lines.map((line) => {
-    if (line.length <= 75) {
-      return line;
-    }
-    const chunks = [];
-    let remaining = line;
-    while (remaining.length > 75) {
-      chunks.push(remaining.slice(0, 75));
-      remaining = " " + remaining.slice(75);
-    }
-    if (remaining) {
-      chunks.push(remaining);
-    }
-    return chunks.join("\r\n");
-  }).join("\r\n");
-
-  const blob = new Blob([ics], { type: "text/calendar;charset=utf-8" });
+  const blob = new Blob([lines.join("\r\n")], { type: "text/calendar;charset=utf-8" });
   const url = URL.createObjectURL(blob);
   const link = document.createElement("a");
   link.href = url;
@@ -170,9 +107,7 @@ function showToast(message) {
   toast.textContent = message;
   toast.classList.add("is-visible");
   window.clearTimeout(toastTimeout);
-  toastTimeout = window.setTimeout(() => {
-    toast.classList.remove("is-visible");
-  }, 2200);
+  toastTimeout = window.setTimeout(() => toast.classList.remove("is-visible"), 2200);
 }
 
 document.querySelectorAll("[data-copy]").forEach((button) => {
@@ -187,70 +122,122 @@ document.querySelectorAll("[data-copy]").forEach((button) => {
   });
 });
 
+async function supabaseRequest(path, options = {}) {
+  const response = await fetch(SUPABASE_URL + "/rest/v1/" + path, {
+    ...options,
+    headers: {
+      apikey: SUPABASE_ANON_KEY,
+      Authorization: "Bearer " + SUPABASE_ANON_KEY,
+      "Content-Type": "application/json",
+      ...(options.headers || {})
+    }
+  });
+  if (!response.ok) throw new Error(await response.text());
+  if (response.status === 204) return null;
+  return response.json();
+}
 
 const guestbookForm = document.getElementById("guestbookForm");
+const investorForm = document.getElementById("investorForm");
 const guestbookList = document.getElementById("guestbookList");
-const storageKey = "undanganGuestbook";
 
-function getGuestbook() {
+async function renderGuestbook() {
+  guestbookList.replaceChildren();
   try {
-    const entries = JSON.parse(localStorage.getItem(storageKey)) || [];
-    return entries.filter((entry) => {
-      const name = String(entry.name || "");
-      const company = String(entry.company || "");
-      const message = String(entry.message || "");
-      return !/^Lorem(?:\b|$)/i.test(name)
-        && !/^Lorem(?:\b|$)/i.test(company)
-        && !/^Lorem(?:\b|$)/i.test(message);
+    const entries = await supabaseRequest("event_guests?select=name,company,age,message,created_at&order=created_at.desc&limit=30");
+    if (!entries.length) {
+      const empty = document.createElement("p");
+      empty.textContent = "Belum ada ucapan. Jadilah tamu pertama!";
+      guestbookList.append(empty);
+      return;
+    }
+    entries.forEach((entry) => {
+      const item = document.createElement("article");
+      item.className = "guestbook-item";
+      const name = document.createElement("strong");
+      name.textContent = entry.name + (entry.company ? " - " + entry.company : "") + (entry.age ? " - " + entry.age + " tahun" : "");
+      const message = document.createElement("p");
+      message.textContent = entry.message;
+      item.append(name, message);
+      guestbookList.append(item);
     });
   } catch (error) {
-    return [];
+    showToast("Tidak dapat memuat buku tamu");
   }
 }
 
-function renderGuestbook() {
-  const entries = getGuestbook();
-  guestbookList.replaceChildren();
-
-  entries.slice().reverse().forEach((entry) => {
-    const item = document.createElement("div");
-    item.className = "guestbook-item";
-
-    const name = document.createElement("strong");
-    const company = entry.company ? ` - ${entry.company}` : "";
-    const age = entry.age ? ` - ${entry.age} tahun` : "";
-    name.textContent = `${entry.name}${company}${age}`;
-
-    const message = document.createElement("p");
-    message.textContent = entry.message;
-
-    item.append(name, message);
-    guestbookList.append(item);
+document.querySelectorAll('input[name="attendance"]').forEach((input) => {
+  input.addEventListener("change", () => {
+    document.querySelectorAll(".attendance-option").forEach((label) => label.classList.remove("is-selected"));
+    input.closest(".attendance-option").classList.add("is-selected");
   });
-}
+});
 
-guestbookForm.addEventListener("submit", (event) => {
+guestbookForm.addEventListener("submit", async (event) => {
+  event.preventEvent = undefined;
   event.preventDefault();
+  const submitButton = guestbookForm.querySelector("button[type='submit']");
+  submitButton.disabled = true;
   const formData = new FormData(guestbookForm);
+  const attendance = String(formData.get("attendance") || "belum_pasti");
   const entry = {
     name: String(formData.get("name")).trim(),
-    company: String(formData.get("company") || "").trim(),
-    age: String(formData.get("age")).trim(),
-    message: String(formData.get("message")).trim()
+    company: String(formData.get("company") || "").trim() || null,
+    age: Number(formData.get("age")),
+    attendance,
+    participant_type: String(formData.get("participant_type") || "tamu"),
+    message: String(formData.get("message")).trim(),
+    source_guest: guestName.textContent
   };
 
   if (!entry.name || !entry.age || !entry.message) {
+    submitButton.disabled = false;
+    showToast("Lengkapi data wajib");
     return;
   }
 
-  const entries = getGuestbook();
-  entries.push(entry);
-  localStorage.setItem(storageKey, JSON.stringify(entries));
-  guestbookForm.reset();
-  renderGuestbook();
-  showToast("Membuka WhatsApp untuk konfirmasi...");
-  const waText = encodeURIComponent("RSVP CosmicApp Launch\nNama: " + entry.name + "\nPerusahaan: " + (entry.company || "-") + "\nUmur: " + entry.age + "\nPesan: " + entry.message);
-  window.open("https://wa.me/6282125050890?text=" + waText, "_blank");
+  try {
+    await supabaseRequest("event_guests", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify(entry)
+    });
+    guestbookForm.reset();
+    await renderGuestbook();
+    showToast("RSVP dan ucapan berhasil dikirim");
+  } catch (error) {
+    showToast("Gagal mengirim data. Periksa tabel dan RLS Supabase.");
+  } finally {
+    submitButton.disabled = false;
+  }
+});
+
+investorForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  const submitButton = investorForm.querySelector("button[type='submit']");
+  submitButton.disabled = true;
+  const formData = new FormData(investorForm);
+  const entry = {
+    name: String(formData.get("name")).trim(),
+    company: String(formData.get("company") || "").trim() || null,
+    email: String(formData.get("email") || "").trim() || null,
+    phone: String(formData.get("phone") || "").trim() || null,
+    interest: String(formData.get("interest") || "").trim() || null,
+    message: String(formData.get("message") || "").trim() || null
+  };
+  try {
+    await supabaseRequest("investors", {
+      method: "POST",
+      headers: { Prefer: "return=minimal" },
+      body: JSON.stringify(entry)
+    });
+    investorForm.reset();
+    showToast("Permintaan investor berhasil dikirim");
+  } catch (error) {
+    showToast("Gagal mengirim data investor");
+  } finally {
+    submitButton.disabled = false;
+  }
 });
 
 renderGuestbook();
@@ -264,30 +251,15 @@ const revealObserver = new IntersectionObserver((entries) => {
   });
 }, { threshold: 0.12 });
 
-document.querySelectorAll(".reveal").forEach((element) => {
-  revealObserver.observe(element);
-});
+document.querySelectorAll(".reveal").forEach((element) => revealObserver.observe(element));
 
 const navLinks = [...document.querySelectorAll(".nav-links a")];
-const navSections = navLinks
-  .map((link) => document.querySelector(link.getAttribute("href")))
-  .filter(Boolean);
+const navSections = navLinks.map((link) => document.querySelector(link.getAttribute("href"))).filter(Boolean);
 
 const navObserver = new IntersectionObserver((entries) => {
-  const visibleEntry = entries
-    .filter((entry) => entry.isIntersecting)
-    .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-
-  if (!visibleEntry) {
-    return;
-  }
-
-  navLinks.forEach((link) => {
-    link.classList.toggle("is-active", link.getAttribute("href") === "#" + visibleEntry.target.id);
-  });
-}, {
-  rootMargin: "-25% 0px -55% 0px",
-  threshold: [0.05, 0.25, 0.5]
-});
+  const visibleEntry = entries.filter((entry) => entry.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+  if (!visibleEntry) return;
+  navLinks.forEach((link) => link.classList.toggle("is-active", link.getAttribute("href") === "#" + visibleEntry.target.id));
+}, { rootMargin: "-25% 0px -55% 0px", threshold: [0.05, 0.25, 0.5] });
 
 navSections.forEach((section) => navObserver.observe(section));
