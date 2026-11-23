@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#050814"/>
+  <rect x="36" y="36" width="728" height="528" rx="24" fill="#0d1530" stroke="#84cfff" stroke-width="6"/>
+  <rect x="36" y="36" width="728" height="74" rx="24" fill="#111d3b"/>
+  <circle cx="82" cy="73" r="18" fill="#84cfff"/>
+  <text x="112" y="82" fill="#f4f8ff" font-family="Arial" font-size="26" font-weight="700">Beranda CosmicApp</text>
+  <circle cx="510" cy="190" r="44" fill="#668cff"/>
+  <rect x="574" y="158" width="145" height="18" rx="9" fill="#84cfff"/>
+  <rect x="574" y="190" width="110" height="12" rx="6" fill="#2a3a68"/>
+  <rect x="82" y="132" width="410" height="310" rx="18" fill="#111d3b" stroke="#668cff" stroke-width="4"/>
+  <text x="112" y="170" fill="#84cfff" font-family="Arial" font-size="18" font-weight="700">POST TERBARU</text>
+  <circle cx="128" cy="220" r="24" fill="#72efcb"/>
+  <rect x="166" y="202" width="210" height="16" rx="8" fill="#f4f8ff"/>
+  <rect x="166" y="228" width="135" height="10" rx="5" fill="#668cff"/>
+  <rect x="112" y="270" width="350" height="128" rx="14" fill="#050814"/>
+  <circle cx="287" cy="334" r="54" fill="#668cff"/>
+  <circle cx="287" cy="334" r="35" fill="#84cfff"/>
+  <rect x="112" y="420" width="94" height="10" rx="5" fill="#72efcb"/>
+  <rect x="224" y="420" width="94" height="10" rx="5" fill="#84cfff"/>
+  <rect x="336" y="420" width="94" height="10" rx="5" fill="#668cff"/>
+</svg>

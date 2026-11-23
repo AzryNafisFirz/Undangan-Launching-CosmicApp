@@ -1,0 +1,16 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+PRODID:-//Undangan Konferensi Privat//ID
+BEGIN:VEVENT
+UID:lorem-project-launch-20261231@example.com
+DTSTAMP:20261123T020713Z
+DTSTART;TZID=Asia/Jakarta:20261231T100000
+DTEND;TZID=Asia/Jakarta:20261231T120000
+SUMMARY:Lorem Project Launch
+DESCRIPTION:Konferensi privat dan peresmian proyek perusahaan via Google Meet atau Discord.
+LOCATION:Online - Google Meet / Discord
+STATUS:CONFIRMED
+END:VEVENT
+END:VCALENDAR

@@ -1,0 +1,27 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#050814"/>
+  <rect x="36" y="36" width="728" height="528" rx="24" fill="#0d1530" stroke="#72efcb" stroke-width="6"/>
+  <text x="82" y="102" fill="#72efcb" font-family="Arial" font-size="24" font-weight="700">MENGIKUTI</text>
+  <text x="82" y="138" fill="#a9b8d9" font-family="Arial" font-size="16">Update dari orbit Anda</text>
+  <g transform="translate(82 174)">
+    <rect width="636" height="94" rx="18" fill="#111d3b" stroke="#668cff" stroke-width="3"/>
+    <circle cx="48" cy="47" r="28" fill="#84cfff"/>
+    <text x="94" y="42" fill="#f4f8ff" font-family="Arial" font-size="20" font-weight="700">@cosmic.creator</text>
+    <rect x="94" y="56" width="150" height="12" rx="6" fill="#668cff"/>
+    <rect x="510" y="27" width="90" height="40" rx="20" fill="#72efcb"/>
+  </g>
+  <g transform="translate(82 292)">
+    <rect width="636" height="94" rx="18" fill="#111d3b" stroke="#668cff" stroke-width="3"/>
+    <circle cx="48" cy="47" r="28" fill="#72efcb"/>
+    <text x="94" y="42" fill="#f4f8ff" font-family="Arial" font-size="20" font-weight="700">@ornava.team</text>
+    <rect x="94" y="56" width="190" height="12" rx="6" fill="#84cfff"/>
+    <rect x="510" y="27" width="90" height="40" rx="20" fill="#72efcb"/>
+  </g>
+  <g transform="translate(82 410)">
+    <rect width="636" height="94" rx="18" fill="#111d3b" stroke="#668cff" stroke-width="3"/>
+    <circle cx="48" cy="47" r="28" fill="#668cff"/>
+    <text x="94" y="42" fill="#f4f8ff" font-family="Arial" font-size="20" font-weight="700">@cosmic.community</text>
+    <rect x="94" y="56" width="170" height="12" rx="6" fill="#668cff"/>
+    <rect x="510" y="27" width="90" height="40" rx="20" fill="#72efcb"/>
+  </g>
+</svg>

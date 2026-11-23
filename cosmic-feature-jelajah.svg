@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="800" height="600" viewBox="0 0 800 600">
+  <rect width="800" height="600" fill="#050814"/>
+  <rect x="36" y="36" width="728" height="528" rx="24" fill="#0d1530" stroke="#668cff" stroke-width="6"/>
+  <text x="82" y="100" fill="#84cfff" font-family="Arial" font-size="24" font-weight="700">JELAJAH GALAKSI</text>
+  <rect x="82" y="124" width="636" height="56" rx="28" fill="#111d3b" stroke="#84cfff" stroke-width="3"/>
+  <circle cx="118" cy="152" r="12" fill="none" stroke="#84cfff" stroke-width="6"/>
+  <text x="146" y="160" fill="#7f91b7" font-family="Arial" font-size="18">Cari komunitas dan proyek</text>
+  <g>
+    <circle cx="158" cy="314" r="76" fill="#668cff"/>
+    <circle cx="400" cy="292" r="108" fill="#84cfff"/>
+    <circle cx="642" cy="330" r="64" fill="#72efcb"/>
+    <circle cx="158" cy="314" r="34" fill="#111d3b"/>
+    <circle cx="400" cy="292" r="52" fill="#111d3b"/>
+    <circle cx="642" cy="330" r="28" fill="#111d3b"/>
+  </g>
+  <rect x="82" y="472" width="180" height="48" rx="24" fill="#84cfff"/>
+  <rect x="310" y="472" width="180" height="48" rx="24" fill="#668cff"/>
+  <rect x="538" y="472" width="180" height="48" rx="24" fill="#72efcb"/>
+</svg>
