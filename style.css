@@ -40,7 +40,8 @@ body {
 
 button,
 input,
-textarea {
+textarea,
+select {
   font: inherit;
 }
 
@@ -192,6 +193,7 @@ p {
 .gallery-grid figure,
 .map-card,
 .guestbook-form,
+.guestbook-history,
 .guestbook-item,
 .timeline-content,
 .quote-card {
@@ -683,7 +685,8 @@ p {
 }
 
 .guestbook-form input,
-.guestbook-form textarea {
+.guestbook-form textarea,
+.guestbook-form select {
   width: 100%;
   border: 2px solid var(--line);
   border-radius: var(--r);
@@ -694,7 +697,8 @@ p {
 }
 
 .guestbook-form input:focus,
-.guestbook-form textarea:focus {
+.guestbook-form textarea:focus,
+.guestbook-form select:focus {
   outline: none;
   border-color: var(--lagoon);
   box-shadow: 0 0 0 3px rgba(0, 114, 122, .18);
@@ -705,27 +709,120 @@ p {
   margin-top: 6px;
 }
 
-.guestbook-list {
+.guestbook-history {
   width: min(680px, 100%);
-  display: grid;
+  padding: 18px;
+  text-align: left;
+}
+
+.guestbook-history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   gap: 12px;
+  margin-bottom: 14px;
+}
+
+.guestbook-history-header h3 {
+  margin: 4px 0 0;
+}
+
+.guestbook-count {
+  flex: 0 0 auto;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 6px 10px;
+  background: var(--mist);
+  color: var(--lagoon);
+  font-size: .78rem;
+  font-weight: 800;
+}
+
+.guestbook-list {
+  width: 100%;
+  max-height: 520px;
+  display: grid;
+  gap: 10px;
+  overflow-y: auto;
+  padding-right: 4px;
   text-align: left;
 }
 
 .guestbook-item {
-  padding: 16px;
+  padding: 14px;
   background: var(--paper);
+}
+
+.guestbook-item-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
 }
 
 .guestbook-item strong {
   display: block;
-  margin-bottom: 6px;
+  margin-bottom: 2px;
+}
+
+.guestbook-company {
+  display: block;
+  color: var(--muted);
+  font-size: .82rem;
+}
+
+.guestbook-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 10px 0;
+}
+
+.guestbook-badge {
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 8px;
+  background: var(--mist);
+  color: var(--lagoon);
+  font-size: .72rem;
+  font-weight: 800;
+}
+
+.guestbook-badge.attendance-hadir {
+  border-color: rgba(0, 114, 122, .25);
+  background: #dffaf5;
+}
+
+.guestbook-badge.attendance-tidak_hadir {
+  background: #fff1ef;
+  color: #9a4238;
+}
+
+.guestbook-badge.attendance-belum_pasti {
+  background: #fff7df;
+  color: #7a651b;
 }
 
 .guestbook-item p {
   margin: 0;
   color: var(--muted);
   line-height: 1.55;
+}
+
+.guestbook-time {
+  flex: 0 0 auto;
+  color: var(--muted);
+  font-size: .72rem;
+  white-space: nowrap;
+}
+
+.guestbook-empty {
+  margin: 0;
+  padding: 16px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r);
+  color: var(--muted);
+  text-align: center;
 }
 
 .toast {
@@ -916,14 +1013,23 @@ footer p {
   }
 
   .guestbook-form,
-  .guestbook-list,
+  .guestbook-history,
   .guestbook-description {
     width: 100%;
   }
 
   .guestbook-form input,
-  .guestbook-form textarea {
+  .guestbook-form textarea,
+  .guestbook-form select {
     font-size: 13px;
+  }
+
+  .guestbook-item-header {
+    flex-direction: column;
+  }
+
+  .guestbook-list {
+    max-height: 420px;
   }
 }
 

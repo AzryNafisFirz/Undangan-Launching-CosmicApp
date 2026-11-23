@@ -231,7 +231,7 @@
         <span class="doodle doodle-pencil guest-pencil" aria-hidden="true">✎</span>
         <p class="eyebrow">Peserta &amp; Investor</p>
         <h2>RSVP &amp; Buku Tamu</h2>
-        <p class="guestbook-description">Konfirmasi kehadiran dan tuliskan ucapan atau pertanyaan Anda. Ucapan akan langsung tampil dan tersimpan di perangkat ini.</p>
+        <p class="guestbook-description">Konfirmasi kehadiran dan tuliskan ucapan atau pertanyaan Anda. Riwayat tamu akan tampil langsung di halaman ini.</p>
         <form id="guestbookForm" class="guestbook-form cartoon-card">
           <label for="guestbookName">Nama</label>
           <input id="guestbookName" name="name" type="text" placeholder="Nama lengkap" required>
@@ -247,7 +247,17 @@
 
           <button class="cartoon-button" type="submit">Kirim RSVP &amp; Ucapan</button>
         </form>
-        <div id="guestbookList" class="guestbook-list" aria-live="polite"></div>
+
+        <div class="guestbook-history">
+          <div class="guestbook-history-header">
+            <div>
+              <p class="card-label">Riwayat Kehadiran</p>
+              <h3>Daftar Tamu</h3>
+            </div>
+            <span id="guestbookCount" class="guestbook-count">0 tamu</span>
+          </div>
+          <div id="guestbookList" class="guestbook-list" aria-live="polite"></div>
+        </div>
       </section>
 
       <footer>

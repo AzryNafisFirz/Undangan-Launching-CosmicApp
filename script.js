@@ -155,8 +155,9 @@ async function supabaseRequest(path, options = {}) {
 
 const guestbookForm = document.getElementById("guestbookForm");
 const guestbookList = document.getElementById("guestbookList");
+const guestbookCount = document.getElementById("guestbookCount");
 
-// RSVP/investor selection is added to the existing form; no redesign or CSS changes.
+// RSVP/investor selection is added to the existing form.
 const messageLabel = document.getElementById("guestbookMessage").previousElementSibling;
 function addSelectField(id, name, labelText, choices) {
   const label = document.createElement("label");
@@ -184,40 +185,105 @@ addSelectField("guestbookAttendance", "attendance", "Konfirmasi Kehadiran", [
   ["belum_pasti", "Belum dapat memastikan"]
 ]);
 
+const participantLabels = {
+  tamu: "Tamu",
+  investor: "Investor"
+};
+
+const attendanceLabels = {
+  hadir: "Hadir",
+  tidak_hadir: "Tidak hadir",
+  belum_pasti: "Belum pasti"
+};
+
+function formatGuestTime(value) {
+  if (!value) return "Waktu tidak tersedia";
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return "Waktu tidak tersedia";
+  return new Intl.DateTimeFormat("id-ID", {
+    day: "numeric",
+    month: "short",
+    year: "numeric",
+    hour: "2-digit",
+    minute: "2-digit"
+  }).format(date);
+}
+
 function renderGuestbook(entries) {
   guestbookList.replaceChildren();
+  guestbookCount.textContent = `${entries.length} tamu`;
+
   if (!entries.length) {
     const empty = document.createElement("p");
-    empty.textContent = "Belum ada ucapan. Jadilah tamu pertama!";
+    empty.className = "guestbook-empty";
+    empty.textContent = "Belum ada data tamu. Jadilah tamu pertama!";
     guestbookList.append(empty);
     return;
   }
+
   entries.forEach((entry) => {
-    const item = document.createElement("div");
+    const item = document.createElement("article");
     item.className = "guestbook-item";
+
+    const header = document.createElement("div");
+    header.className = "guestbook-item-header";
+
+    const identity = document.createElement("div");
     const name = document.createElement("strong");
-    name.textContent = `${entry.name}${entry.company ? ` - ${entry.company}` : ""}`;
+    name.textContent = entry.name;
+    identity.append(name);
+
+    if (entry.company) {
+      const company = document.createElement("span");
+      company.className = "guestbook-company";
+      company.textContent = entry.company;
+      identity.append(company);
+    }
+
+    const time = document.createElement("time");
+    time.className = "guestbook-time";
+    time.dateTime = entry.created_at || "";
+    time.textContent = formatGuestTime(entry.created_at);
+    header.append(identity, time);
+
+    const meta = document.createElement("div");
+    meta.className = "guestbook-meta";
+
+    const participant = document.createElement("span");
+    participant.className = "guestbook-badge";
+    participant.textContent = participantLabels[entry.participant_type] || entry.participant_type || "Peserta";
+
+    const attendance = document.createElement("span");
+    attendance.className = `guestbook-badge attendance-${entry.attendance || "belum_pasti"}`;
+    attendance.textContent = attendanceLabels[entry.attendance] || entry.attendance || "Belum pasti";
+
+    meta.append(participant, attendance);
+
     const message = document.createElement("p");
-    message.textContent = entry.message;
-    item.append(name, message);
+    message.textContent = entry.message || "Tidak ada pesan.";
+
+    item.append(header, meta, message);
     guestbookList.append(item);
   });
 }
 
 async function loadGuestbook() {
   try {
-    const entries = await supabaseRequest("event_guests?select=name,company,message,created_at&order=created_at.desc&limit=30");
+    const entries = await supabaseRequest("event_guests?select=name,company,participant_type,attendance,message,created_at&order=created_at.desc&limit=100");
     renderGuestbook(entries || []);
   } catch (error) {
     guestbookList.replaceChildren();
+    guestbookCount.textContent = "Tidak tersedia";
     const status = document.createElement("p");
-    status.textContent = "Buku tamu belum dapat dimuat. Periksa konfigurasi Supabase.";
+    status.className = "guestbook-empty";
+    status.textContent = "Riwayat tamu belum dapat dimuat. Periksa koneksi atau konfigurasi Supabase.";
     guestbookList.append(status);
-    console.error("Gagal memuat buku tamu:", error);
+    console.error("Gagal memuat riwayat tamu:", error);
   }
 }
 
 guestbookForm.addEventListener("submit", async (event) => {
+  event.preventEvent;
   event.preventDefault();
   if (!guestbookForm.reportValidity()) return;
   const submitButton = guestbookForm.querySelector("button[type='submit']");
