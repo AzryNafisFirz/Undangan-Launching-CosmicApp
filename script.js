@@ -248,7 +248,9 @@ guestbookForm.addEventListener("submit", (event) => {
   localStorage.setItem(storageKey, JSON.stringify(entries));
   guestbookForm.reset();
   renderGuestbook();
-  showToast("RSVP dan ucapan berhasil dikirim");
+  showToast("Membuka WhatsApp untuk konfirmasi...");
+  const waText = encodeURIComponent("RSVP CosmicApp Launch\nNama: " + entry.name + "\nPerusahaan: " + (entry.company || "-") + "\nUmur: " + entry.age + "\nPesan: " + entry.message);
+  window.open("https://wa.me/6282125050890?text=" + waText, "_blank");
 });
 
 renderGuestbook();
