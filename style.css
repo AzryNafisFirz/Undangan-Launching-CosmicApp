@@ -936,3 +936,15 @@ footer p {
     scroll-behavior: auto !important;
   }
 }
+
+/* Mobile navigation layout fix */
+@media (max-width: 600px) {
+ .invitation-nav {width:calc(100% - 12px);grid-template-columns:40px minmax(0,1fr) 42px;gap:5px;padding:5px;}
+ .nav-links {display:flex;overflow-x:auto;scrollbar-width:none;gap:3px;min-width:0;}
+ .nav-links::-webkit-scrollbar{display:none}
+ .nav-links a{flex:0 0 auto;padding:0 7px;font-size:10px;white-space:nowrap;}
+ .nav-music-toggle{width:40px;height:40px;padding:0;}
+ .nav-music-label{display:none}
+}
+.gallery-grid figure{max-height:none!important;aspect-ratio:4/3;}
+.gallery-grid img{object-fit:cover;}
